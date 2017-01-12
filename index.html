@@ -1,0 +1,178 @@
+<DOCTYPE html>
+<html>
+<head>
+    <title>Mercury1089 Scouting</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <script>
+        
+        var autonHigh = 0
+        var autonLow = 0
+        
+        var teleHigh = 0
+        var teleLow = 0
+        
+        function autonHighPButton() {
+            autonHigh++;
+            document.getElementById("highGoalAuton").innerHTML = autonHigh;
+        }
+        function autonHighMButton() {
+            autonHigh--;
+            document.getElementById("highGoalAuton").innerHTML = autonHigh;
+        }
+        function autonLowPButton() {
+            autonLow++;
+            document.getElementById("lowGoalAuton").innerHTML = autonLow;
+        }
+        function autonLowMButton() {
+            autonLow--;
+            document.getElementById("lowGoalAuton").innerHTML = autonLow;
+        }
+        
+        function teleHighPButton() {
+            teleHigh++;
+            document.getElementById("highGoalTele").innerHTML = teleHigh;
+        }
+        function teleHighMButton() {
+            teleHigh--;
+            document.getElementById("highGoalTele").innerHTML = teleHigh;
+        }
+        function teleLowPButton() {
+            teleLow++;
+            document.getElementById("lowGoalTele").innerHTML = teleLow;
+        }
+        function teleLowMButton() {
+            teleLow--;
+            document.getElementById("lowGoalTele").innerHTML = teleLow;
+        }
+        
+        function reset() {
+            document.getElementById("teamnum").value = ""
+            document.getElementById("baseline").checked = false
+            document.getElementById("auton0").selected = true
+            autonHigh = 0
+            autonLow = 0
+            document.getElementById("highGoalAuton").textContent = "0"
+            document.getElementById("lowGoalAuton").textContent = "0"
+            document.getElementById("tele0").selected = true
+            teleHigh = 0
+            teleLow = 0
+            document.getElementById("highGoalTele").textContent = "0"
+            document.getElementById("lowGoalTele").textContent = "0"
+            document.getElementById("touchpad").checked = false
+        }
+
+        function uploadBtn() {
+//            $.ajax
+//            ({
+//                type: "POST",
+//                //the url where you want to sent the userName and password to
+//                url: 'https://sheetsu.com/apis/v1.0/ffc9aee63ba1',
+//                dataType: 'json',
+//                async: false,
+//                //json object to sent to the authentication url
+//                data: JSON.stringify({ id: 6}),
+//                success:function (html) {
+//                    alert("success");
+//                },
+//                fail: function (html) {
+//                    alert("fail");
+//                }  
+//            });
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            xmlhttp.open("POST", "https://sheetsu.com/apis/v1.0/ffc9aee63ba1");
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.send(JSON.stringify({"Team Number": document.getElementById("teamnum").value,
+                                         "Baseline Breached": document.getElementById("baseline").checked,
+                                         "Number of Rotors (Auton)": document.getElementById("rotorAuton").options[document.getElementById("rotorAuton").selectedIndex].value,
+                                         "High Goal (Auton)": autonHigh,
+                                         "Low Goal (Auton)": autonLow,
+                                         "Number of Rotors (TeleOp)": document.getElementById("rotorTele").options[document.getElementById("rotorTele").selectedIndex].value,
+                                         "High Goal (TeleOp)": teleHigh,
+                                         "Low Goal (TeleOp)": teleLow,
+                                         "Touchpad Reached": document.getElementById("touchpad").checked}));
+            
+            alert("done");
+        }
+        
+//        $('#uploadBttn').click(function(event){
+//             
+//            $.ajax
+//            ({
+//                type: "POST",
+//                //the url where you want to sent the userName and password to
+//                url: 'https://sheetsu.com/apis/v1.0/ffc9aee63ba1',
+//                dataType: 'json',
+//                async: false,
+//                //json object to sent to the authentication url
+//                data: '{"id": "5}',
+//                success: function () {
+//
+//                
+//                }
+//            })
+//        }
+    
+    </script>
+    
+    <p class="title">Mercury 1089 Scouting Sheet</p>
+    <br>
+    <button onclick="reset()" type="button">Reset</button>
+    <br><br>
+    Team Number:
+    <input type="text" id="teamnum"></input>
+    
+    <br><br>
+    <h1>AUTONOMOUS</h1>
+    <input type="checkbox" id="baseline">Baseline breached</input>
+    <br><br>
+    
+    Number of rotors turning at the end of auton:
+    <select id="rotorAuton">
+        <option id="auton0" value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+    </select>
+    <br><br>
+    
+    <div id="highGoalAuton" style="display: inline">0</div> high goal scored.
+    <button type="button" onclick="autonHighPButton()">+</button><button type="button" onclick="autonHighMButton()">-</button>
+    <br><br>
+    
+    <div id="lowGoalAuton" style="display: inline">0</div> low goal scored.
+    <button type="button" onclick="autonLowPButton()">+</button><button type="button" onclick="autonLowMButton()">-</button>
+    <br><br>
+    
+    <h1>TELE-OP</h1>
+    
+    
+    Number of rotors turning
+    <select id="rotorTele">
+        <option id="tele0" value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+    </select>
+    <br><br>
+    
+    <div id="highGoalTele" style="display: inline">0</div> high goal scored.
+    <button type="button" onclick="teleHighPButton()">+</button><button type="button" onclick="teleHighMButton()">-</button>
+    <br><br>
+    
+    <div id="lowGoalTele" style="display: inline">0</div> low goal scored.
+    <button type="button" onclick="teleLowPButton()">+</button><button type="button" onclick="teleLowMButton()">-</button>
+    <br><br>
+    
+    <input type="checkbox" id="touchpad">Touchpad reached at the end.</input>
+    <br><br>
+    <br><br>
+    
+    <button type="button" id="uploadBttn" onclick="uploadBtn()">Upload</button>
+</body>
+</html>
