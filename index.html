@@ -70,6 +70,12 @@
         }
 
         function getQr() {
+            var errors = false
+            if (document.getElementById("teamnum").value.toString().length > 5 {
+                alert("Sorry, but your team number can't be more than 5 digits long.");
+                errors = true;
+            }
+            
             var text = document.getElementById("teamnum").value + "," + document.getElementById("baseline").checked + "," + document.getElementById("rotorAuton").options[document.getElementById("rotorAuton").selectedIndex].value + "," + autonHigh + "," + autonLow + "," + document.getElementById("rotorTele").options[document.getElementById("rotorTele").selectedIndex].value + "," + teleHigh + "," + teleLow + "," + document.getElementById("touchpad").checked;
             new QRCode(document.getElementById("qrcode"), text);
         }
