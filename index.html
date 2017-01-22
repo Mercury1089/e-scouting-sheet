@@ -1,9 +1,11 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Mercury1089 Scouting</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="qrcode.js"></script>
+    <script src="qrcode.min.js"></script>
 </head>
 <body>
     
@@ -14,6 +16,7 @@
         
         var teleHigh = 0
         var teleLow = 0
+        
         
         function autonHighPButton() {
             autonHigh++;
@@ -50,38 +53,32 @@
         }
         
         function reset() {
-            document.getElementById("teamnum").value = ""
-            document.getElementById("baseline").checked = false
-            document.getElementById("auton0").selected = true
-            autonHigh = 0
-            autonLow = 0
-            document.getElementById("highGoalAuton").textContent = "0"
-            document.getElementById("lowGoalAuton").textContent = "0"
-            document.getElementById("tele0").selected = true
-            teleHigh = 0
-            teleLow = 0
-            document.getElementById("highGoalTele").textContent = "0"
-            document.getElementById("lowGoalTele").textContent = "0"
-            document.getElementById("touchpad").checked = false
+            document.getElementById("teamnum").value = "";
+            document.getElementById("baseline").checked = false;
+            document.getElementById("auton0").selected = true;
+            autonHigh = 0;
+            autonLow = 0;
+            document.getElementById("highGoalAuton").textContent = "0";
+            document.getElementById("lowGoalAuton").textContent = "0";
+            document.getElementById("tele0").selected = true;
+            teleHigh = 0;
+            teleLow = 0;
+            document.getElementById("highGoalTele").textContent = "0";
+            document.getElementById("lowGoalTele").textContent = "0";
+            document.getElementById("touchpad").checked = false;
+            document.getElementById("qrcode").innerHTML = "";
         }
 
+        function getQr() {
+            var text = document.getElementById("teamnum").value + "," + document.getElementById("baseline").checked + "," + document.getElementById("rotorAuton").options[document.getElementById("rotorAuton").selectedIndex].value + "," + autonHigh + "," + autonLow + "," + document.getElementById("rotorTele").options[document.getElementById("rotorTele").selectedIndex].value + "," + teleHigh + "," + teleLow + "," + document.getElementById("touchpad").checked;
+            new QRCode(document.getElementById("qrcode"), text);
+        }
+        
+        function clearCode() {
+            document.getElementById("qrcode").innerHTML = "";
+        }
+        
         function uploadBtn() {
-//            $.ajax
-//            ({
-//                type: "POST",
-//                //the url where you want to sent the userName and password to
-//                url: 'https://sheetsu.com/apis/v1.0/ffc9aee63ba1',
-//                dataType: 'json',
-//                async: false,
-//                //json object to sent to the authentication url
-//                data: JSON.stringify({ id: 6}),
-//                success:function (html) {
-//                    alert("success");
-//                },
-//                fail: function (html) {
-//                    alert("fail");
-//                }  
-//            });
             var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
             xmlhttp.open("POST", "https://sheetsu.com/apis/v1.0/ffc9aee63ba1");
             xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -95,42 +92,30 @@
                                          "Low Goal (TeleOp)": teleLow,
                                          "Touchpad Reached": document.getElementById("touchpad").checked}));
             
-            alert("done");
+            alert("Thanks!");
         }
         
-//        $('#uploadBttn').click(function(event){
-//             
-//            $.ajax
-//            ({
-//                type: "POST",
-//                //the url where you want to sent the userName and password to
-//                url: 'https://sheetsu.com/apis/v1.0/ffc9aee63ba1',
-//                dataType: 'json',
-//                async: false,
-//                //json object to sent to the authentication url
-//                data: '{"id": "5}',
-//                success: function () {
-//
-//                
-//                }
-//            })
-//        }
-    
+        
+        
     </script>
     
-    <p class="title">Mercury 1089 Scouting Sheet</p>
-    <br>
-    <button onclick="reset()" type="button">Reset</button>
-    <br><br>
+    <div class="titlebar">
+        <button onclick="reset()" class="reset"type="button"><img width="30px" height="30px"src="reset.png"/></button>
+    <p class="title">MERCURY 1089 SCOUTING SHEET</p>
+    </div>
+    
+    <br><br><br><br><br><br>
     Team Number:
     <input type="text" id="teamnum"></input>
     
     <br><br>
     <h1>AUTONOMOUS</h1>
-    <input type="checkbox" id="baseline">Baseline breached</input>
-    <br><br>
+<input type='checkbox' name='baseline' value='valuable2' id="baseline" data-bind="checked: chk"/><label for="baseline"></label>
+    <label for="baseline">&nbsp;Baseline Breached.</label>
+    <div data-bind="html: chk"></div>
+    <br>
     
-    Number of rotors turning at the end of auton:
+    Number of rotors turning:
     <select id="rotorAuton">
         <option id="auton0" value="0">0</option>
         <option value="1">1</option>
@@ -141,17 +126,17 @@
     <br><br>
     
     <div id="highGoalAuton" style="display: inline">0</div> high goal scored.
-    <button type="button" onclick="autonHighPButton()">+</button><button type="button" onclick="autonHighMButton()">-</button>
+    <button type="button" class="counterButton" onclick="autonHighPButton()">+</button><button type="button" class="counterButton" onclick="autonHighMButton()">-</button>
     <br><br>
     
     <div id="lowGoalAuton" style="display: inline">0</div> low goal scored.
-    <button type="button" onclick="autonLowPButton()">+</button><button type="button" onclick="autonLowMButton()">-</button>
+    <button type="button" class="counterButton" onclick="autonLowPButton()">+</button><button type="button" class="counterButton" onclick="autonLowMButton()">-</button>
     <br><br>
     
     <h1>TELE-OP</h1>
     
     
-    Number of rotors turning
+    Number of rotors turning:
     <select id="rotorTele">
         <option id="tele0" value="0">0</option>
         <option value="1">1</option>
@@ -162,17 +147,31 @@
     <br><br>
     
     <div id="highGoalTele" style="display: inline">0</div> high goal scored.
-    <button type="button" onclick="teleHighPButton()">+</button><button type="button" onclick="teleHighMButton()">-</button>
+    <button type="button" class="counterButton" onclick="teleHighPButton()">+</button><button type="button" class="counterButton" onclick="teleHighMButton()">-</button>
     <br><br>
     
     <div id="lowGoalTele" style="display: inline">0</div> low goal scored.
-    <button type="button" onclick="teleLowPButton()">+</button><button type="button" onclick="teleLowMButton()">-</button>
+    <button type="button" class="counterButton" onclick="teleLowPButton()">+</button><button type="button" class="counterButton" onclick="teleLowMButton()">-</button>
     <br><br>
     
-    <input type="checkbox" id="touchpad">Touchpad reached at the end.</input>
+    <input type='checkbox' name='touchpad' value='valuable2' id="touchpad" data-bind="checked: chk"/><label for="touchpad"></label>
+    <label for="touchpad">&nbsp;Touchpad Reached.</label>
+    <div data-bind="html: chk"></div>
+
     <br><br>
     <br><br>
-    
-    <button type="button" id="uploadBttn" onclick="uploadBtn()">Upload</button>
+    <a href="#openModal" onclick="getQr()" class="modalOpen">Open Modal</a><br><br><br>
+
+<div id="openModal" class="modalDialog">
+	<div>
+		<a href="#close" onclick="clearCode()" title="Close" class="close">&times;</a>
+		<h2 style="">QR Code</h2>
+        <p style="font-family: SourceSansPro">Make sure to show this to a strategy head.</p>
+        <br><br>
+		<div id="qrcode" style=""></div><br><br>
+	</div>
+</div>
+
+</div>
 </body>
 </html>
