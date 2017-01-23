@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Mercury1089 Scouting</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
     <link rel="stylesheet" href="style.css">
     <script src="qrcode.js"></script>
     <script src="qrcode.min.js"></script>
@@ -23,16 +23,20 @@
             document.getElementById("highGoalAuton").innerHTML = autonHigh;
         }
         function autonHighMButton() {
-            autonHigh--;
-            document.getElementById("highGoalAuton").innerHTML = autonHigh;
+            if (autonHigh-1 >= 0) {
+                autonHigh--;
+                document.getElementById("highGoalAuton").innerHTML = autonHigh;
+            }
         }
         function autonLowPButton() {
             autonLow++;
             document.getElementById("lowGoalAuton").innerHTML = autonLow;
         }
         function autonLowMButton() {
-            autonLow--;
-            document.getElementById("lowGoalAuton").innerHTML = autonLow;
+            if (autonLow-1 >= 0) {
+                autonLow--;
+                document.getElementById("lowGoalAuton").innerHTML = autonLow;
+            }
         }
         
         function teleHighPButton() {
@@ -40,16 +44,20 @@
             document.getElementById("highGoalTele").innerHTML = teleHigh;
         }
         function teleHighMButton() {
-            teleHigh--;
-            document.getElementById("highGoalTele").innerHTML = teleHigh;
+            if (teleHigh-1 >= 0) {
+                teleHigh--;
+                document.getElementById("highGoalTele").innerHTML = teleHigh;
+            }
         }
         function teleLowPButton() {
             teleLow++;
             document.getElementById("lowGoalTele").innerHTML = teleLow;
         }
-        function teleLowMButton() {
-            teleLow--;
-            document.getElementById("lowGoalTele").innerHTML = teleLow;
+        function teleLowMButton() {            
+            if (teleLow-1 >= 0) {
+                teleLow--;
+                document.getElementById("lowGoalTele").innerHTML = teleLow;
+            }
         }
         
         function reset() {
@@ -70,14 +78,9 @@
         }
 
         function getQr() {
-            var errors = false
-            if (document.getElementById("teamnum").value.toString().length > 5 {
-                alert("Sorry, but your team number can't be more than 5 digits long.");
-                errors = true;
-            }
-            
-            var text = document.getElementById("teamnum").value + "," + document.getElementById("baseline").checked + "," + document.getElementById("rotorAuton").options[document.getElementById("rotorAuton").selectedIndex].value + "," + autonHigh + "," + autonLow + "," + document.getElementById("rotorTele").options[document.getElementById("rotorTele").selectedIndex].value + "," + teleHigh + "," + teleLow + "," + document.getElementById("touchpad").checked;
+            var text = document.getElementById("teamnum").value + "," + document.getElementById("baseline").checked + "," + document.querySelector('input[name="rotorauton"]:checked').value + "," + autonHigh + "," + autonLow + "," + document.querySelector('input[name="rotortele"]:checked').value + "," + teleHigh + "," + teleLow + "," + document.getElementById("touchpad").checked;
             new QRCode(document.getElementById("qrcode"), text);
+            
         }
         
         function clearCode() {
@@ -107,12 +110,12 @@
     
     <div class="titlebar">
         <button onclick="reset()" class="reset"type="button"><img width="30px" height="30px"src="reset.png"/></button>
-    <p class="title">MERCURY 1089 SCOUTING SHEET</p>
+    <p class="title">FRC STEAMWORKS 2017</p>
     </div>
     
     <br><br><br><br><br><br>
     Team Number:
-    <input type="text" id="teamnum"></input>
+    <input type="tel" maxlength="5" id="teamnum"></input>
     
     <br><br>
     <h1>AUTONOMOUS</h1>
@@ -122,42 +125,54 @@
     <br>
     
     Number of rotors turning:
-    <select id="rotorAuton">
-        <option id="auton0" value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-    </select>
+    
+    <input id="auton0" type="radio" value="0" name="rotorauton" checked></input>
+    <label for="auton0">0</label>
+    <input id="auton1" type="radio" value="1" name="rotorauton" ></input>
+    <label for="auton1">1</label>
+    <input id="auton2" type="radio" value="2" name="rotorauton" ></input>
+    <label for="auton2">2</label>
+    <input id="auton3" type="radio" value="3" name="rotorauton" ></input>
+    <label for="auton3">3</label>
+    <input id="auton4" type="radio" value="4" name="rotorauton" ></input>
+    <label for="auton4">4</label>
     <br><br>
     
-    <div id="highGoalAuton" style="display: inline">0</div> high goal scored.
-    <button type="button" class="counterButton" onclick="autonHighPButton()">+</button><button type="button" class="counterButton" onclick="autonHighMButton()">-</button>
+    <div id="highGoalAuton" style="display: inline">0</div> high goal scored.<br>
+    <button type="button" class="counterButtonPlus" onclick="autonHighPButton()">+</button>
+    <button type="button" class="counterButtonMinus" onclick="autonHighMButton()">-</button>
     <br><br>
     
-    <div id="lowGoalAuton" style="display: inline">0</div> low goal scored.
-    <button type="button" class="counterButton" onclick="autonLowPButton()">+</button><button type="button" class="counterButton" onclick="autonLowMButton()">-</button>
+    <div id="lowGoalAuton" style="display: inline">0</div> low goal scored.<br>
+    <button type="button" class="counterButtonPlus" onclick="autonLowPButton()">+</button>
+    <button type="button" class="counterButtonMinus" onclick="autonLowMButton()">-</button>
     <br><br>
     
     <h1>TELE-OP</h1>
     
     
     Number of rotors turning:
-    <select id="rotorTele">
-        <option id="tele0" value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-    </select>
+
+    <input id="tele0" type="radio" value="0" name="rotortele" checked></input>
+    <label for="tele0">0</label>
+    <input id="tele1" type="radio" value="1" name="rotortele" ></input>
+    <label for="tele1">1</label>
+    <input id="tele2" type="radio" value="2" name="rotortele" ></input>
+    <label for="tele2">2</label>
+    <input id="tele3" type="radio" value="3" name="rotortele" ></input>
+    <label for="tele3">3</label>
+    <input id="tele4" type="radio" value="4" name="rotortele" ></input>
+    <label for="tele4">4</label>
     <br><br>
     
-    <div id="highGoalTele" style="display: inline">0</div> high goal scored.
-    <button type="button" class="counterButton" onclick="teleHighPButton()">+</button><button type="button" class="counterButton" onclick="teleHighMButton()">-</button>
+    <div id="highGoalTele" style="display: inline">0</div> high goal scored.<br>
+    <button type="button" class="counterButtonPlus" onclick="teleHighPButton()">+</button>
+    <button type="button" class="counterButtonMinus" onclick="teleHighMButton()">-</button>
     <br><br>
     
-    <div id="lowGoalTele" style="display: inline">0</div> low goal scored.
-    <button type="button" class="counterButton" onclick="teleLowPButton()">+</button><button type="button" class="counterButton" onclick="teleLowMButton()">-</button>
+    <div id="lowGoalTele" style="display: inline">0</div> low goal scored.<br>
+    <button type="button" class="counterButtonPlus" onclick="teleLowPButton()">+</button>
+    <button type="button" class="counterButtonMinus" onclick="teleLowMButton()">-</button>
     <br><br>
     
     <input type='checkbox' name='touchpad' value='valuable2' id="touchpad" data-bind="checked: chk"/><label for="touchpad"></label>
@@ -166,7 +181,9 @@
 
     <br><br>
     <br><br>
-    <a href="#openModal" onclick="getQr()" class="modalOpen">Open Modal</a><br><br><br>
+    
+    <a href="#openModal" onclick="getQr()" class="modalOpen"><span>Get QR Code</span></a>
+    <br><br><br>
 
 <div id="openModal" class="modalDialog">
 	<div>

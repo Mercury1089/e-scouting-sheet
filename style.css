@@ -15,6 +15,11 @@
     width: 100%;
     text-align: center;
     position: fixed;
+    z-index: 9999;
+    display: flex;
+    justify-content:center;
+    align-content:center;
+    flex-direction:column;
 }
 #teamnum {
     border: none;
@@ -49,28 +54,66 @@ input[type=checkbox] {
         padding: 0 0 0 0px;
         transition: 0.2s
     }
+input:focus {
+    outline:0 !important;
+}
+input[type="radio"] {
+    display:none;   
+}
+input[type="radio"] + label {
+    font-size: 20px;
+    margin: 5px;
+    transition: 0.2s
+}
+input[type="radio"]:checked + label {
+    color: #37baf8
+    
+}
 button {
     background: #37baf8;
     color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 10px;
     margin: 3px 3px 3px 3px;
     height: 50px;
-    width: 120px;
+    width: 130px;
+    transform: translate(0, 0);
+    transition: 0.2s;
+    box-shadow: 0px 6px 0px #2695BC;
 }
 button:active {
-    background: #2a9ed4;
+    transform: translate(0, 3px);
+    box-shadow: 0px 2px 0px #2695BC;
 }
-.counterButton {
-    width: 30px;
-    height: 30px;
-    border-radius: 30px;
+button:focus {outline:0 !important;}
+.counterButtonPlus {
+    font-size: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background: #7dde7d;
+    box-shadow: 0px 6px 0px #5cbe5c;
+}
+.counterButtonPlus:active {
+    transform: translate(0, 3px);
+    box-shadow: 0px 2px 0px #5cbe5c;
+}
+.counterButtonMinus {
+    font-size: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background: #de7d7d;
+    box-shadow: 0px 6px 0px #be5c5c;
+}
+.counterButtonMinus:active {
+    transform: translate(0, 3px);
+    box-shadow: 0px 2px 0px #be5c5c;
 }
 .reset {
-    background: none;
-    
+    width: 100px;
     left: 5%;
-    top: 18px;
+    top: 15px;
     position: fixed
 }
 body {
@@ -123,6 +166,7 @@ body {
 	text-align: center;
 	top: -10px;
 	width: 24px;
+    height: 24px;
 	text-decoration: none;
 	font-weight: bold;
 	-webkit-border-radius: 12px;
@@ -135,15 +179,31 @@ body {
 .modalOpen {
     background: #37baf8;
     color: white;
-    display: inline-block;
     line-height: 50px;
     border: none;
-    border-radius: 3px;
+    border-radius: 10px;
     margin: 3px 3px 3px 3px;
     height: 50px;
-    width: 120px;
-    text-decoration: none
+    width: 150px;
+    text-decoration: none;
+    transform: translate(0, 0);
+    transition: 0.2s;
+    box-shadow: 0px 6px 0px #2695BC;
+    margin: auto;
+    display: flex;
+    justify-content:center;
+    align-content:center;
+    flex-direction:column;
 }
 .modalOpen:active {
-    background: #2a9ed4;
+    transform: translate(0, 3px);
+    box-shadow: 0px 2px 0px #2695BC;
+}
+a:focus {
+    outline:0 !important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
